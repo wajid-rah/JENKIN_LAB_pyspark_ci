@@ -42,8 +42,7 @@ from pyspark.sql import SparkSession
 		
 		spark.sparkContext.setLogLevel("ERROR")
 		
-		jdbc_url = f"jdbc:mysql://{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"  # jdbc_url = "jdbc:mysql://mysql-db:3306/salesdb"
-
+		jdbc_url = f"jdbc:mysql://{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}?useSSL=false&allowPublicKeyRetrieval=true"  # jdbc_url = "jdbc:mysql://mysql-db:3306/salesdb"
 		
 		df = spark.read \
 			.format("jdbc") \
