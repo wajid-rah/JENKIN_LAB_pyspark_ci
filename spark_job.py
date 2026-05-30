@@ -43,7 +43,17 @@ from pyspark.sql import SparkSession
 		spark.sparkContext.setLogLevel("ERROR")
 		
 		jdbc_url = f"jdbc:mysql://{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}?useSSL=false&allowPublicKeyRetrieval=true"  # jdbc_url = "jdbc:mysql://mysql-db:3306/salesdb"
-		
+			
+		# +-------------------------------+----------+--------------------------------------------------+
+		# | Flag                          | Where    | What it does                                     |
+		# +-------------------------------+----------+--------------------------------------------------+
+		# | --ssl-mode=DISABLED           | mysqlCLI | tells mysql client to skip SSL entirely          |
+		# +-------------------------------+----------+--------------------------------------------------+
+		# | useSSL=false                  | JDBC URL | tells Spark/JDBC driver to skip SSL              |
+		# +-------------------------------+----------+--------------------------------------------------+
+		# | allowPublicKeyRetrieval=true  | JDBC URL | needed for MySQL 8.0 password auth without SSL   |
+		# +-------------------------------+----------+--------------------------------------------------+
+	
 		df = spark.read \
 			.format("jdbc") \
 			.option("url", jdbc_url) \
