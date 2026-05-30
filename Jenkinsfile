@@ -75,7 +75,10 @@ pipeline {
                 echo 'Checking MySQL is reachable...'
                 sh '''
                     apt-get install -y -q default-mysql-client
-                    mysql -h mysql-db -u root -proot salesdb -e "SELECT COUNT(*) as total_rows FROM sales;"
+                     mysql -h mysql-db -u root -proot --ssl-mode=DISABLED salesdb -e "SELECT COUNT(*) as total_rows FROM sales;"
+                     # MySQL 8.0 enables SSL by default. When the mysql client tries to connect, it sees a self-signed certificate 
+                     # and refuses it as untrusted. Since this is a local dev/learning setup, we can just disable SSL.
+                     
                 '''
             }
         }
