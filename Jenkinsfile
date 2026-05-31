@@ -96,6 +96,9 @@ pipeline {
                 sh '''
                     export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
                     export PATH=$JAVA_HOME/bin:$PATH
+                    echo "Checking jar exists:"
+                    ls -lh /opt/spark-libs/mysql-connector.jar
+      
                     echo "Using Java: $(java -version 2>&1 | head -1)"
                     python3 spark_job.py
                 '''
