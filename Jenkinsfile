@@ -29,7 +29,7 @@ pipeline {
         MYSQL_HOST = 'mysql-db'
         MYSQL_PORT = '3306'
         MYSQL_DB   = 'salesdb'
-        MYSQL_USER = 'user'
+        MYSQL_USER = 'root'
         MYSQL_PASS = 'root'
         JAVA_HOME  = '/usr/lib/jvm/java-21-openjdk-amd64' 
     }
