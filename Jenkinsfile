@@ -56,16 +56,25 @@ pipeline {
         stage('Download MySQL Driver') {
             steps {
                 echo 'Downloading MySQL JDBC driver...'
+                // sh '''
+                //     mkdir -p /opt/spark-libs
+                //     if [ ! -f /opt/spark-libs/mysql-connector.jar ]; then
+                //         curl -L -o /opt/spark-libs/mysql-connector.jar \
+                //         https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+                //         echo "Driver downloaded!"
+                //     else
+                //         echo "Driver already exists, skipping download."
+                //     fi
+                // '''
                 sh '''
-                    mkdir -p /opt/spark-libs
-                    if [ ! -f /opt/spark-libs/mysql-connector.jar ]; then
-                        curl -L -o /opt/spark-libs/mysql-connector.jar \
-                        https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
-                        echo "Driver downloaded!"
-                    else
-                        echo "Driver already exists, skipping download."
-                    fi
-                '''
+                      mkdir -p /opt/spark-libs
+                      rm -f /opt/spark-libs/mysql-connector.jar
+                      curl -L -o /opt/spark-libs/mysql-connector.jar \
+                      https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+                      echo "Jar size:"
+                      ls -lh /opt/spark-libs/mysql-connector.jar
+                    '''
+                
 
                 // if the file does NOT exist → run the download
                 // Part                              Meaning
