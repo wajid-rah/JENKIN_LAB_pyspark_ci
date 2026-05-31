@@ -15,7 +15,7 @@ MYSQL_PASS = os.getenv("MYSQL_PASS", "root")  # the password we set
 #  variable       read from           fallback if
 #  in Python    Jenkins env block    not set anywhere
 
-
+# docker exec -it mysql-db mysql -u root -proot salesdb -e "SELECT COUNT(*) as total_rows FROM sales;"
 
 # 	Jenkinsfile                     spark_job.py
 # ────────────────                ──────────────────────────────
