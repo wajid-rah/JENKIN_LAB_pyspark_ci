@@ -40,7 +40,11 @@ spark = SparkSession.builder \
     .config("spark.executor.extraClassPath", JAR_PATH) \ 
 	.getOrCreate()
 	# Hardcoded '/opt/spark-libs/mysql-connector.jar' ==>  we created that path ourselves in the Download MySQL Driver stage in Jenkinsfile
-
+	# Config							What it does
+	# ---------------------------------------------------------------------
+	# spark.jars						tells Spark to load this jar
+	# spark.driver.extraClassPath		adds jar to driver JVM classpath
+	# spark.executor.extraClassPath		adds jar to executor JVM classpath
 
 spark.sparkContext.setLogLevel("ERROR")
 
