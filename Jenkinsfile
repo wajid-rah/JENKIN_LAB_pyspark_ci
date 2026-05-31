@@ -31,7 +31,7 @@ pipeline {
         MYSQL_DB   = 'salesdb'
         MYSQL_USER = 'user'
         MYSQL_PASS = 'root'
-        JAVA_HOME  = '/usr/lib/jvm/java-17-openjdk-amd64'
+        JAVA_HOME  = '/usr/lib/jvm/java-21-openjdk-amd64' 
     }
 
     stages {
@@ -93,7 +93,12 @@ pipeline {
         stage('Run PySpark Job') {
             steps {
                 echo 'Running PySpark job...'
-                sh 'python3 spark_job.py'
+                sh '''
+                    export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+                    export PATH=$JAVA_HOME/bin:$PATH
+                    echo "Using Java: $(java -version 2>&1 | head -1)"
+                    python3 spark_job.py
+                '''
             }
         }
     }
