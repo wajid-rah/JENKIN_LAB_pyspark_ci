@@ -4,13 +4,13 @@ import os
 MYSQL_HOST = os.getenv("MYSQL_HOST", "mysql-db")   # name of the MySQL Docker container
 MYSQL_PORT = os.getenv("MYSQL_PORT", "3306")       # MySQL's default port (inside Docker network)
 MYSQL_DB   = os.getenv("MYSQL_DB",   "salesdb")    # the database we created
-MYSQL_USER = os.getenv("MYSQL_USER", "jenkins")    # the user we created
+MYSQL_USER = os.getenv("MYSQL_USER", "user")    # the user we created
 #                         ↑
 #              if you run python3 spark_job.py
 #              directly in terminal without setting
 #              any env variables — this default is used
 
-MYSQL_PASS = os.getenv("MYSQL_PASS", "jenkins123")  # the password we set
+MYSQL_PASS = os.getenv("MYSQL_PASS", "root")  # the password we set
 #     │              │                   │
 #  variable       read from           fallback if
 #  in Python    Jenkins env block    not set anywhere
@@ -26,7 +26,7 @@ MYSQL_PASS = os.getenv("MYSQL_PASS", "jenkins123")  # the password we set
 #   ...                          ...
 # }
 
-
+JAR_PATH = "/opt/spark-libs/mysql-connector.jar"
 
 
 print("=" * 50)
@@ -35,7 +35,9 @@ print("=" * 50)
 
 spark = SparkSession.builder \
 	.appName("JenkinsPySparkDemo") \
-	.config("spark.jars", "/opt/spark-libs/mysql-connector.jar") \
+    .config("spark.jars", JAR_PATH) \
+    .config("spark.driver.extraClassPath", JAR_PATH) \
+    .config("spark.executor.extraClassPath", JAR_PATH) \ 
 	.getOrCreate()
 	# Hardcoded '/opt/spark-libs/mysql-connector.jar' ==>  we created that path ourselves in the Download MySQL Driver stage in Jenkinsfile
 
@@ -53,6 +55,8 @@ jdbc_url = f"jdbc:mysql://{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}?useSSL=false&allo
 # +-------------------------------+----------+--------------------------------------------------+
 # | allowPublicKeyRetrieval=true  | JDBC URL | needed for MySQL 8.0 password auth without SSL   |
 # +-------------------------------+----------+--------------------------------------------------+
+print(f"Connecting to: {jdbc_url}")
+print(f"Using jar: {JAR_PATH}") 
 
 df = spark.read \
 	.format("jdbc") \
