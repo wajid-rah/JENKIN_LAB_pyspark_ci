@@ -4,7 +4,7 @@ import os
 MYSQL_HOST = os.getenv("MYSQL_HOST", "mysql-db")   # name of the MySQL Docker container
 MYSQL_PORT = os.getenv("MYSQL_PORT", "3306")       # MySQL's default port (inside Docker network)
 MYSQL_DB   = os.getenv("MYSQL_DB",   "salesdb")    # the database we created
-MYSQL_USER = os.getenv("MYSQL_USER", "user")    # the user we created
+MYSQL_USER = os.getenv("MYSQL_USER", "root")    # the user we created
 #                         ↑
 #              if you run python3 spark_job.py
 #              directly in terminal without setting
