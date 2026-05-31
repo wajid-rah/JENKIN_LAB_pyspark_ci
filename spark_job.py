@@ -36,8 +36,8 @@ print("=" * 50)
 spark = SparkSession.builder \
 	.appName("JenkinsPySparkDemo") \
     .config("spark.jars", JAR_PATH) \
-    .config("spark.driver.extraClassPath", JAR_PATH) \
-    .config("spark.executor.extraClassPath", JAR_PATH) \ 
+    .config("spark.driver.extraClassPath", JAR_PATH) \ 
+    .config("spark.executor.extraClassPath", JAR_PATH) \
 	.getOrCreate()
 	# Hardcoded '/opt/spark-libs/mysql-connector.jar' ==>  we created that path ourselves in the Download MySQL Driver stage in Jenkinsfile
 	# Config							What it does
