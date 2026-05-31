@@ -41,7 +41,14 @@ pipeline {
                 sh '''
                     apt-get update -q
                     apt-get install -y default-jdk   # needs root ✅
-                    pip install -r requirements.txt  # needs root ✅
+                    pip install -r requirements.txt --quiet # needs root ✅
+  
+                    echo "Java location:"
+                    which java
+                    java -version
+                    echo "JAVA_HOME candidates:"
+                    find /usr -name "java" -type f 2>/dev/null
+      
                 '''
             }
         }
